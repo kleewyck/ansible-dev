@@ -1,0 +1,20 @@
+---
+- name: Playbook - Challenge Day 2
+  hosts: renamed:!taz
+  gather_facts: no   
+  connection: ssh
+  become: yes
+
+
+  tasks:
+  - name: Ensure group "funkytown" exists
+    group:
+      name: funkytown
+      state: present
+
+  - name: Add the user {{ USER_TO_CREATE }} with a specific uid and a primary group of 'funkytown'
+    ansible.builtin.user:
+      name: "{{ USER_TO_CREATE }}"
+      comment: Ansible Created user
+      group: funkytown
+      state: present
